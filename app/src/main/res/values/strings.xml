@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Projeto API</string>
+    <string name="type_title">Type the Title here…</string>
+    <string name="search">SEARCH</string>
+    <string name="title">TITLE</string>
+    <string name="year">YEAR</string>
+    <string name="genre">GENRE</string>
+    <string name="plot">PLOT</string>
+    <string name="director">DIRECTOR</string>
+    <string name="cast">CAST</string>
 </resources>

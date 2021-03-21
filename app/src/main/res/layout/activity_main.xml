@@ -4,15 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
-    <TextView
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="199dp"
+        android:layout_height="203dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.291"
+        app:srcCompat="@drawable/movie" />
+
+    <EditText
+        android:id="@+id/txt_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginTop="56dp"
+        android:backgroundTint="@android:color/black"
+        android:ems="10"
+        android:hint="@string/type_title"
+        android:inputType="textPersonName"
+        android:textColorHighlight="#7E7E7E"
+        android:textColorLink="#393838"
+        android:textCursorDrawable="@android:drawable/status_bar_item_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_logo" />
+
+    <Button
+        android:id="@+id/btn_busca"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="buscaFilme"
+        android:text="@string/search"
+        app:backgroundTint="#474444"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_search"
+        app:layout_constraintVertical_bias="0.242" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
