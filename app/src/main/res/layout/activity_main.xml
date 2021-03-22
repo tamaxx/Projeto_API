@@ -39,7 +39,7 @@
         android:id="@+id/btn_busca"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="buscaFilme"
+        android:onClick="searchMovie"
         android:text="@string/search"
         app:backgroundTint="#474444"
         app:layout_constraintBottom_toBottomOf="parent"
