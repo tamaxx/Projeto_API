@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/img_poster"
-            android:layout_width="240dp"
-            android:layout_height="332dp"
+            android:layout_width="236dp"
+            android:layout_height="338dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
