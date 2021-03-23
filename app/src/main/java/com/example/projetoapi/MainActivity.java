@@ -8,6 +8,7 @@ import androidx.loader.content.Loader;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +32,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private Dialog dialog;
     private EditText txt_search;
+    private String posterURL;
+    private String title;
+    private String year;
+    private String genre;
+    private String director;
+    private String plot;
+    private String cast;
+    private JSONObject movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +50,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         dialog = new Dialog(this);
 
+        this.deleteDatabase(BDHelper.BANCO);
+
         if(getSupportLoaderManager().getLoader(0) != null){
             getSupportLoaderManager().initLoader(0, null, this);
         }
 
+    }
+
+    public void RedirectDB(View v){
+        Intent intentMovies = new Intent(this, DbActivity.class);
+        startActivity(intentMovies);
     }
 
     public void searchMovie(View v) {
@@ -94,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
 
         try {
-            JSONObject movie = new JSONObject(data);
+            movie = new JSONObject(data);
             String result = movie.getString("Response");
 
             if (result.equals("True")) {
@@ -106,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 TextView txt_plot;
                 TextView txt_director;
                 TextView txt_cast;
+                String resultado;
+
+                BDController crud = new BDController(getBaseContext());
 
                 dialog.setContentView(R.layout.popup);
                 img_poster = dialog.findViewById(R.id.img_poster);
@@ -116,25 +136,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 txt_director = dialog.findViewById(R.id.txt_director);
                 txt_cast = dialog.findViewById(R.id.txt_cast);
 
-                String posterURL = movie.getString("Poster");
+                posterURL = movie.getString("Poster");
 
                 Picasso.get().load(posterURL).into(img_poster);
 
-                String title = movie.getString("Title");
+                title = movie.getString("Title");
                 txt_title.setText(title);
 
-                String year = "(" + movie.getString("Year") + ")";
+                year= "(" + movie.getString("Year") + ")";
                 txt_year.setText(year);
 
-                txt_genre.setText(movie.getString("Genre"));
+                genre = movie.getString("Genre");
+                txt_genre.setText(genre);
 
-                String director = "Directed by: " + movie.getString("Director");
+                director = "Directed by: " + movie.getString("Director");
                 txt_director.setText(director);
 
-                txt_plot.setText(movie.getString("Plot"));
+                plot = movie.getString("Plot");
+                txt_plot.setText(plot);
 
-                String cast = "Cast: " + movie.getString("Actors");
+                cast = "Cast: " + movie.getString("Actors");
                 txt_cast.setText(cast);
+
+                resultado = crud.inserir(title, posterURL, movie.getInt("Year"), genre, movie.getString("Director"), movie.getString("Actors"), plot);
+                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG);
 
                 dialog.show();
 
