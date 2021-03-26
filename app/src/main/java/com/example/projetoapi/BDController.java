@@ -13,12 +13,13 @@ public class BDController {
 
     public BDController(Context context) { banco = new BDHelper(context);}
 
-    public String inserir(String titulo, String cartaz, Integer ano, String genero, String diretor, String elenco, String descricao) {
+    public String inserir(String _id, String titulo, String cartaz, String ano, String genero, String diretor, String elenco, String descricao) {
         ContentValues valores;
         long result;
 
         bd = banco.getWritableDatabase();
         valores = new ContentValues();
+        valores.put(BDHelper.ID_FILME, _id);
         valores.put(BDHelper.NOME_FILME, titulo);
         valores.put(BDHelper.CARTAZ_FILME, cartaz);
         valores.put(BDHelper.ANO_FILME, ano);

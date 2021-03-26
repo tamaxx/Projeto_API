@@ -10,4 +10,5 @@
     <string name="director">DIRECTOR</string>
     <string name="cast">CAST</string>
     <string name="my_movies">MY MOVIES</string>
+    <string name="last_movies">Check out your last searched productions</string>
 </resources>

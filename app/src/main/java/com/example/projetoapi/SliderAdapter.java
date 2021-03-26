@@ -18,13 +18,12 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     private List<SliderItem> sliderItems;
     private ViewPager2 viewPager2;
+    private TextView txt_itemTitle;
+    private TextView txt_itemGenre;
 
-    private OnItemSelectedListener listener;
-
-    SliderAdapter(OnItemSelectedListener listener, List<SliderItem> sliderItems, ViewPager2 viewPager) {
+    SliderAdapter(List<SliderItem> sliderItems, ViewPager2 viewPager) {
         this.sliderItems = sliderItems;
         this.viewPager2 = viewPager;
-        this.listener = listener;
     }
 
     @NonNull
@@ -42,10 +41,9 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
         SliderItem item = sliderItems.get(position);
-        Picasso.get().load(item.getPoster()).into(holder.img_poster);
-        if(position == sliderItems.size() - 2){
-            viewPager2.post(runnable);
-        }
+        Picasso.get().load(item.getPoster()).fit().centerInside().into(holder.img_poster);
+        txt_itemTitle.setText(item.getTitle());
+        txt_itemGenre.setText(item.getGender());
     }
 
     @Override
@@ -53,30 +51,16 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
         return sliderItems.size();
     }
 
-    class SliderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class SliderViewHolder extends RecyclerView.ViewHolder{
 
         private RoundedImageView img_poster;
 
         public SliderViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             img_poster = itemView.findViewById(R.id.imageSlide);
-        }
-
-        @Override
-        public void onClick(View v) {
-            SliderItem selectedItem = sliderItems.get(getAdapterPosition());
-
-            listener.onItemSelected(selectedItem);
+            txt_itemTitle = itemView.findViewById(R.id.txt_itemTitle);
+            txt_itemGenre = itemView.findViewById(R.id.txt_itemGenre);
         }
     }
 
-    private Runnable runnable = () -> {
-        sliderItems.addAll(sliderItems);
-        notifyDataSetChanged();
-    };
-
-    public interface OnItemSelectedListener {
-        void onItemSelected(SliderItem item);
-    }
 }

@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private Dialog dialog;
     private EditText txt_search;
+    private String _id;
     private String posterURL;
     private String title;
     private String year;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String plot;
     private String cast;
     private JSONObject movie;
+    private String resultado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         txt_search = findViewById(R.id.txt_search);
 
-        dialog = new Dialog(this);
-
-        this.deleteDatabase(BDHelper.BANCO);
+        //this.deleteDatabase(BDHelper.BANCO);
 
         if(getSupportLoaderManager().getLoader(0) != null){
             getSupportLoaderManager().initLoader(0, null, this);
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void searchMovie(View v) {
 
+        dialog = new Dialog(this);
         String queryString = txt_search.getText().toString();
 
         InputMethodManager inputMethodManager = (InputMethodManager)
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
         String queryString = "";
+
         if(args != null){
             queryString = args.getString("queryString");
         }
@@ -123,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 TextView txt_plot;
                 TextView txt_director;
                 TextView txt_cast;
-                String resultado;
 
                 BDController crud = new BDController(getBaseContext());
 
@@ -135,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 txt_plot = dialog.findViewById(R.id.txt_plot);
                 txt_director = dialog.findViewById(R.id.txt_director);
                 txt_cast = dialog.findViewById(R.id.txt_cast);
+
+                _id = movie.getString("imdbID");
 
                 posterURL = movie.getString("Poster");
 
@@ -158,8 +161,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 cast = "Cast: " + movie.getString("Actors");
                 txt_cast.setText(cast);
 
-                resultado = crud.inserir(title, posterURL, movie.getInt("Year"), genre, movie.getString("Director"), movie.getString("Actors"), plot);
-                Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_LONG);
+                resultado = crud.inserir(_id, title, posterURL, movie.getString("Year"), genre, movie.getString("Director"), movie.getString("Actors"), plot);
 
                 dialog.show();
 

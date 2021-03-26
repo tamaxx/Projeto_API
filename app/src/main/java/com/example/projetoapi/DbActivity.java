@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,8 +18,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbActivity extends AppCompatActivity implements
-        com.example.projetoapi.SliderAdapter.OnItemSelectedListener {
+public class DbActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
@@ -37,10 +37,10 @@ public class DbActivity extends AppCompatActivity implements
         Cursor cursor = crud.carrega();
 
         while(cursor.moveToNext()){
-            sliderItems.add(new SliderItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7)));
+            sliderItems.add(new SliderItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7)));
         }
 
-        viewPager2.setAdapter(new com.example.projetoapi.SliderAdapter(this, sliderItems, viewPager2));
+        viewPager2.setAdapter(new com.example.projetoapi.SliderAdapter(sliderItems, viewPager2));
 
         viewPager2.setClipToPadding(false);
         viewPager2.setClipChildren(false);
@@ -90,11 +90,8 @@ public class DbActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onItemSelected(SliderItem item) {
-
-    }
-
-    public void CleanDB(View v){
-        this.deleteDatabase(BDHelper.BANCO);
+    public void onBackPressed() {
+        Intent intentMain = new Intent(this, MainActivity.class);
+        startActivity(intentMain);
     }
 }

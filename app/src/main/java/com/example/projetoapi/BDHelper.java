@@ -27,7 +27,7 @@ public class BDHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "create table obras" +
-                        "(_id integer primary key autoincrement, cartaz text, titulo text, ano int, genero text, diretor text, elenco text, descricao text)"
+                        "(_id text primary key, cartaz text, titulo text, ano int, genero text, diretor text, elenco text, descricao text)"
         );
     }
 
