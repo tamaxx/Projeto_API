@@ -3,13 +3,14 @@ package com.example.projetoapi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 public class BDController {
 
     private SQLiteDatabase bd;
     private BDHelper banco;
-
 
     public BDController(Context context) { banco = new BDHelper(context);}
 
@@ -30,6 +31,7 @@ public class BDController {
 
         result = bd.insert(BDHelper.TABELA_FILME, null, valores);
 
+
         if (result == -1) {
             return "Erro ao inserir registro";
         } else {
@@ -41,8 +43,36 @@ public class BDController {
             String [] dados = { banco.ID_FILME, banco.NOME_FILME, banco.CARTAZ_FILME, banco.ANO_FILME, banco.GENERO_FILME, banco.DIRETOR_FILME, banco.CAST_FILME, banco.SINOPSE_FILME};
             bd = banco.getReadableDatabase();
             cursor = bd.query(banco.TABELA_FILME, dados, null ,null, null, null, null,null);
+
             return cursor;
         }
+
+        public void deletar(String id){
+            String where = BDHelper.ID_FILME + "=" + "'" + id + "'";
+            bd = banco.getReadableDatabase();
+            bd.delete(BDHelper.TABELA_FILME, where, null);
+        }
+
+        public boolean procuraID(String id) {
+            bd = banco.getReadableDatabase();
+            long queryRows = DatabaseUtils.queryNumEntries(bd, BDHelper.TABELA_FILME, BDHelper.ID_FILME + "=?", new String[] {id});
+            if(queryRows > 0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        public Cursor carregaAleatorio(){
+            Cursor cursor;
+            bd = banco.getReadableDatabase();
+            String[] poster = {banco.CARTAZ_FILME};
+            cursor = bd.query(banco.TABELA_FILME, poster, null, null, null, null, "random()", "1");
+
+            return cursor;
+        }
+
 
 
 

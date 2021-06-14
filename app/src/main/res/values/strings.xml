@@ -10,7 +10,19 @@
     <string name="director">DIRECTOR</string>
     <string name="cast">CAST</string>
     <string name="my_movies">MY MOVIES</string>
-    <string name="last_movies">Check out your last searched productions</string>
+    <string name="empty"> </string>
+    <string name="last_movies">Check out your favorite productions</string>
+    <string name="nav_main">Main Screen</string>
+    <string name="nav_profile">Profile</string>
+    <string name="open_navigation">Open navigation drawer</string>
+    <string name="close_navigation">Close navigation drawer</string>
+    <string name="username">User</string>
+    <string name="choose_profile_pic">Choose your profile picture</string>
+    <string name="confirm_changes">Confirm</string>
+    <string name="about">About</string>
+    <string name="info">About the App</string>
+    <string name="info_text1">Even though you\'re</string>
+    <string name="info_text2">away from Hollywood, the OMDB App is here to bring you all the news and fresh information about the movies you love!</string>
 </resources>
 
 
