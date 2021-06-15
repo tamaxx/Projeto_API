@@ -192,15 +192,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
+    boolean dark = false;
 
     @Override
 
     public void onSensorChanged(SensorEvent event){
 
         float light = event.values[0];
-        if (light < 10) {
+        if (!dark && light < 10) {
             openLightDialog();
+            dark=true;
         }
+
     }
 
     private void openLightDialog(){
