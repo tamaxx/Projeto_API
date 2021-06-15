@@ -17,10 +17,15 @@ import androidx.loader.content.Loader;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -65,11 +70,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.example.projetoapi.ProfileActivity.EXTRA_NUMBER;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>,
-        NavigationView.OnNavigationItemSelectedListener, OnSuccessListener<Location>, OnFailureListener {
+        NavigationView.OnNavigationItemSelectedListener, OnSuccessListener<Location>, OnFailureListener, SensorEventListener {
     public static final String EXTRA_TEXT = "com.example.projetoapi.EXTRA_TEXT";
     public final static int LOCATION_CODE = 1;
 
     float[] results = new float[1];
+
     double latitude1, longitude1, latitude2, longitude2;
 
     private CustomView customView;
@@ -100,12 +106,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private String resultado;
     private int currentID;
 
+    private SensorManager sensorManager;
+    private Sensor sensor;
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
+        sensor = (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -165,6 +179,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    @Override
+
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+
+    protected void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+
+    @Override
+
+    public void onSensorChanged(SensorEvent event){
+
+        float light = event.values[0];
+        if (light < 10) {
+            openLightDialog();
+        }
+    }
+
+    private void openLightDialog(){
+        LightDialog lightDialog = new LightDialog();
+        lightDialog.show(getSupportFragmentManager(), "lightDialog");
+    }
+
+
     public void infoPopUp(View v){
         if(ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -204,6 +248,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             } catch (Exception e){
                 Log.e("Exception", "errors", e);
             }
+
+        }
+        else {
+            txt_info = dialogInfo.findViewById(R.id.txt_info);
+            txt_info.setText(String.valueOf(getString(R.string.info_text1) + " Too far " + getString(R.string.info_text2)));
         }
     }
 
