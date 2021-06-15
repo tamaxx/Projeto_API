@@ -208,6 +208,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         lightDialog.show(getSupportFragmentManager(), "lightDialog");
     }
 
+    @Override
+
+    public void onAccuracyChanged(Sensor sensor, int accuracy){
+
+    }
+
 
     public void infoPopUp(View v){
         if(ActivityCompat.checkSelfPermission(this,
