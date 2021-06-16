@@ -1,0 +1,3 @@
+O OMDB App é um aplicativo desenvolvido com base na OMDB API: uma API sobre conteúdos audiovisuais fundamentada na plataforma IMDB.
+http://www.omdbapi.com/
+Pedro Fernandes Tamas e Isabela de Freitas Borejo
