@@ -23,6 +23,7 @@
     <string name="info">About the App</string>
     <string name="info_text1">Even though you\'re</string>
     <string name="info_text2">away from Hollywood, the OMDB App is here to bring you all the news and fresh information about the movies you love!</string>
+    <string name="info_textNoLocation">Even though you\'re too far away from Hollywood, the OMDB App is here to bring you all the news and fresh information about the movies you love!</string>
 </resources>
 
 

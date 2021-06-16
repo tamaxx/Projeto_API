@@ -117,6 +117,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_CODE);
+        } else {
+            final FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this);
+            fusedLocationProviderClient.getLastLocation().addOnFailureListener(this);
+        }
+
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
 
@@ -219,21 +228,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     public void infoPopUp(View v){
-        if(ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_CODE);
-            Toast toast = Toast.makeText(this, "A permissão não foi concedida", Toast.LENGTH_SHORT);
-            toast.show();
-        } else {
-            final FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this);
-            fusedLocationProviderClient.getLastLocation().addOnFailureListener(this);
-        }
         dialogInfo.show();
     }
 
     @Override
-    public void onFailure(@NonNull Exception e){Log.e("Location not detected", "errors", e);}
+    public void onFailure(@NonNull Exception e){
+
+    }
 
     @Override
     public void onSuccess(Location location){
@@ -261,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         else {
             txt_info = dialogInfo.findViewById(R.id.txt_info);
-            txt_info.setText(String.valueOf(getString(R.string.info_text1) + " Too far " + getString(R.string.info_text2)));
+            txt_info.setText(String.valueOf(getString(R.string.info_text1) + " too far " + getString(R.string.info_text2)));
         }
     }
 
