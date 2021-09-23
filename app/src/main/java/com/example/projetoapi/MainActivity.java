@@ -1,4 +1,4 @@
-package com.example.projetoapi;
+ package com.example.projetoapi;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
         sensor = (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -285,6 +284,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void RedirectNews(View v){
+        Intent intentNews = new Intent(this, NewsActivity.class);
+        startActivity(intentNews);
     }
 
     public void RedirectDB(View v){

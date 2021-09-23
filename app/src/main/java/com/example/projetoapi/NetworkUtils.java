@@ -1,3 +1,4 @@
+
 package com.example.projetoapi;
 
 import android.net.Uri;
@@ -16,53 +17,82 @@ public class NetworkUtils {
     private static final String QUERY_PARAMETER = "t";
     private static final String PLOT = "plot";
     private static final String API_KEY = "apikey";
-        static String searchMovieInfo(String queryString){
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
-            String movieJSONString = null;
-            try{
-                Uri builtURI = Uri.parse(MOVIES_URL).buildUpon()
-                        .appendQueryParameter(QUERY_PARAMETER, queryString)
-                        .appendQueryParameter(PLOT, "full")
-                        .appendQueryParameter(API_KEY, "310995c0")
-                        .build();
 
-                URL requestURL = new URL(builtURI.toString());
+    private static final String NEWMOVIES_URL = "http://192.168.0.191:45455/movieByPlatform?";
+    private static final String NEWMOVIES_QUERYPARAMETER = "namePlatform";
 
-                urlConnection = (HttpURLConnection) requestURL.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
+    static String searchMovieInfo(String queryString){
+        try{
+            Uri builtURI = Uri.parse(MOVIES_URL).buildUpon()
+                    .appendQueryParameter(QUERY_PARAMETER, queryString)
+                    .appendQueryParameter(PLOT, "full")
+                    .appendQueryParameter(API_KEY, "310995c0")
+                    .build();
+            return request(new URL(builtURI.toString()));
+        } catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-                InputStream inputStream = urlConnection.getInputStream();
+    static String searchNewMoviesInfo(String queryString){
+        try{
+            Uri builtURI = Uri.parse(NEWMOVIES_URL).buildUpon()
+                    .appendQueryParameter(NEWMOVIES_QUERYPARAMETER, queryString)
+                    .build();
+            return request(new URL (builtURI.toString()));
+        } catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-                reader = new BufferedReader(new InputStreamReader(inputStream));
+    static private String request(URL url){
+        return request(url, "GET");
+    }
 
-                StringBuilder builder = new StringBuilder();
-                String row;
+    static private String request(URL url, String method){
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        String JSONString = null;
+        try{
+            URL requestURL = url;
 
-                while((row = reader.readLine()) != null){
-                    builder.append(row);
-                    builder.append("\n");
-                }
-                if(builder.length() == 0){
-                    return null;
-                }
-                movieJSONString = builder.toString();
-            } catch (IOException e){
-                e.printStackTrace();
-            } finally {
-                if(urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if(reader !=  null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e){
-                        e.printStackTrace();
-                    }
+            urlConnection = (HttpURLConnection) requestURL.openConnection();
+            urlConnection.setRequestMethod(method);
+            urlConnection.addRequestProperty("Content-Type", "application/json");
+            urlConnection.connect();
+
+            InputStream inputStream = urlConnection.getInputStream();
+
+            reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            StringBuilder builder = new StringBuilder();
+            String row;
+
+            while((row = reader.readLine()) != null){
+                builder.append(row);
+                builder.append("\n");
+            }
+            if(builder.length() == 0){
+                return null;
+            }
+            JSONString = builder.toString();
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            if(urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if(reader !=  null) {
+                try {
+                    reader.close();
+                } catch (IOException e){
+                    e.printStackTrace();
                 }
             }
-            Log.d(LOG_TAG, movieJSONString);
-            return movieJSONString;
         }
+        Log.d(LOG_TAG, JSONString);
+        return JSONString;
+    }
 }

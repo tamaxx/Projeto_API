@@ -4,11 +4,10 @@ import android.content.Context;
 
 import androidx.annotation.Nullable;
 import androidx.loader.content.AsyncTaskLoader;
-import androidx.loader.content.Loader;
 
-public class LoadMovie extends AsyncTaskLoader<String> {
+public class LoadNews extends AsyncTaskLoader<String> {
     private String mQueryString;
-    LoadMovie(Context context, String queryString){
+    LoadNews(Context context, String queryString){
         super(context);
         mQueryString = queryString;
     }
@@ -22,6 +21,6 @@ public class LoadMovie extends AsyncTaskLoader<String> {
     @Nullable
     @Override
     public String loadInBackground() {
-        return NetworkUtils.searchMovieInfo(mQueryString);
+        return NetworkUtils.searchNewMoviesInfo(mQueryString);
     }
 }
