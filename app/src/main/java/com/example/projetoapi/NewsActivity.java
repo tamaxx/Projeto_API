@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>, AdapterView.OnItemSelectedListener {
+public class NewsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<String>>, AdapterView.OnItemSelectedListener {
 
     private ArrayList<NewMovie> newMoviesList;
     private JSONArray newMovies;
@@ -59,7 +59,6 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         platformSpinner.setAdapter(adapter);
         platformSpinner.setOnItemSelectedListener(this);
-
     }
 
     @Override
@@ -96,7 +95,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @NonNull
     @Override
-    public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
+    public Loader<ArrayList<String>> onCreateLoader(int id, @Nullable Bundle args) {
         String queryString = "";
 
         if(args != null){
@@ -106,9 +105,9 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<String> loader, String data) {
+    public void onLoadFinished(@NonNull Loader<ArrayList<String>> loader, ArrayList<String> data) {
         try {
-            newMovies = new JSONArray(data);
+            newMovies = new JSONArray(data.get(0));
             newMoviesList = new ArrayList<>();
             for(int i = 0; i < newMovies.length(); i++) {
                 newMovie = newMovies.getJSONObject(i);
@@ -139,7 +138,7 @@ public class NewsActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(@NonNull Loader<String> loader) {
+    public void onLoaderReset(@NonNull Loader<ArrayList<String>> loader) {
 
     }
 }

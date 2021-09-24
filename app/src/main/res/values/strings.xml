@@ -10,7 +10,8 @@
     <string name="director">DIRECTOR</string>
     <string name="cast">CAST</string>
     <string name="my_movies">MY MOVIES</string>
-    <string name="news">NEWS</string>
+    <string name="news">NEWS ON STREAMING</string>
+    <string name="select_streaming">SELECT YOUR STREAMING SERVICE</string>
     <string name="empty"> </string>
     <string name="last_movies">Check out your favorite productions</string>
     <string name="new_streaming">Keep yourself up to date to the news on streaming!</string>
@@ -29,7 +30,10 @@
 
     <string-array name="platforms">
         <item>Netflix</item>
-        <item>Prime Video</item>
+        <item>Amazon Prime Video</item>
+        <item>Telecine Play</item>
+        <item>Youtube Filmes</item>
+        <item>HBO Max</item>
     </string-array>
 
 </resources>

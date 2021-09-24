@@ -1,3 +1,9 @@
-O OMDB App é um aplicativo desenvolvido com base na OMDB API: uma API sobre conteúdos audiovisuais fundamentada na plataforma IMDB.
-http://www.omdbapi.com/
-Pedro Fernandes Tamas e Isabela de Freitas Borejo
+O aplicativo desenvolvido tem como objetivo possibilitar a consulta e descoberta de filmes e séries por parte dos usuários
+
+Dupla: Pedro Fernandes Tamas e Isabela de Freitas Borejo - 3ºA ETIM DS
+
+API OMDb: http://www.omdbapi.com/
+
+Link do vídeo de demonstração: https://www.youtube.com/watch?v=53rLgny5xcI
+
+NOTA: Para que a API funcione localmente, é necessário que o script do banco seja executado corretamente no SGBD MySql e que a connectionString no arquivo Web.config

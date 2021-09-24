@@ -21,6 +21,9 @@ public class NetworkUtils {
     private static final String NEWMOVIES_URL = "http://192.168.0.191:45455/movieByPlatform?";
     private static final String NEWMOVIES_QUERYPARAMETER = "namePlatform";
 
+    private static final String DIRECTORS_URL = "http://192.168.0.191:45455/directorByMovie?";
+    private static final String DIRECTOR_QUERYPARAMETER = "nameMovie";
+
     static String searchMovieInfo(String queryString){
         try{
             Uri builtURI = Uri.parse(MOVIES_URL).buildUpon()
@@ -39,6 +42,18 @@ public class NetworkUtils {
         try{
             Uri builtURI = Uri.parse(NEWMOVIES_URL).buildUpon()
                     .appendQueryParameter(NEWMOVIES_QUERYPARAMETER, queryString)
+                    .build();
+            return request(new URL (builtURI.toString()));
+        } catch (IOException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    static String searchDirectorsInfo(String queryString){
+        try{
+            Uri builtURI = Uri.parse(DIRECTORS_URL).buildUpon()
+                    .appendQueryParameter(DIRECTOR_QUERYPARAMETER, queryString)
                     .build();
             return request(new URL (builtURI.toString()));
         } catch (IOException e){

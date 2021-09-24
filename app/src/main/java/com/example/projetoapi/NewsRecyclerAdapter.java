@@ -1,6 +1,5 @@
 package com.example.projetoapi;
 
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,11 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
     public class NewsViewHolder extends RecyclerView.ViewHolder{
         private TextView txt_newTitle;
-        private TextView txt_newYear;
         private ImageView img_newPoster;
 
         public NewsViewHolder(final View view){
             super(view);
             txt_newTitle = view.findViewById(R.id.txt_newTitle);
-            txt_newYear = view.findViewById(R.id.txt_newYear);
             img_newPoster = view.findViewById(R.id.img_newPoster);
         }
     }
@@ -44,10 +41,8 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         String title = newMoviesList.get(position).getNewTitle();
-        //int year = newMoviesList.get(position).getNewYear();
 
         holder.txt_newTitle.setText(title);
-        //holder.txt_newYear.setText(year);
 
         String poster = newMoviesList.get(position).getNewPoster();
         Picasso.get().load(poster).into(holder.img_newPoster);
